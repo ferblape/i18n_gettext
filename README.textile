@@ -1,0 +1,72 @@
+h1. I18nGettext
+
+h2. Introduction
+
+Gettext support for your Rails 2.2 or newer applications using the Rails I18n
+framework, using the Gettext gem from Masao Mutoh (http://rubyforge.org/projects/gettext/).
+
+Provides a few simple wrapper methods to the I18n methods using the Gettext
+syntax thus permitting the automatic extraction of strings for translation.
+
+The Gettext backend extends the Simple backend provided by Rails and sends
+translation requests not recognised to Gettext which in turn will extract 
+messages from the standard .mo translation dictionaries. This means that the
+example translation files provided by the "Rails i18n team":http://rails-i18n.org
+can be used for all the base Rails methods such as +distance_in_words+ and +Date+
+formatting.
+
+Plural strings are supported using the powerful Gettext syntax.
+
+This plugin should act as a drop-in replacement for the old gettext/rails
+extension, but some minor changes are required. The +after_init_gettext+ 
+methods for example are now longer supported, but can be replaced with a simple
++before_filter+ call.
+
+
+h2. Authors
+
+Project initiated at "Rails-Hackathon":http://rails-hackathon.org in Madrid by:
+
+* "Sam Lown":http://www.samlown.com
+* "Fernando Blat":http://www.inwebwetrust.net
+
+Thanks must go out to the Rails i18n development team (http://rails-i18n.org)
+for their excellent patch included in Rails 2.2. It really did make our plugin
+almost trivial to implement.
+
+
+h2. Install
+
+We're assuming in these examples that your Rails application has either been created or upgraded
+to Rails 2.2 or higher.
+
+1. Install the plugin in your application:
+
+  ./script/plugin install git://github.com/ferblape/i18n_gettext.git
+
+2. Add the gettext library to your environment and ensure any old usage of Gettext/rails is
+removed. Something similar to the following should be added to your Rails Initializer config:
+
+ config.gem "gettext", :version => '1.93.0', :lib => 'gettext' 
+
+3. (Optional) Add support for the Gettext backend by including the following
+in your config/environment.rb file after Initialization:
+
+  I18n.backend = I18n::Backend::GetTextWrapper.new
+  I18n.backend.default_domain = 'somedomain'
+
+The default domain is used by Gettext to describe which .po files should be used for the
+translations. See the Gettext manuals for more information on this.
+
+TODO describe how to setup the .po, .mo, and message reaper methods using Gettext.
+
+
+h2. Possible Issues
+
+We're not sure how this will perform using Rails in Multi-threaded mode as it 
+depends greatly on the way Gettext works. Gettext has a tendancy to use lots of
+globals so we suspect it won't work very well.
+
+
+
+Copyright (c) 2009 [Sam Lown, Fernando Blat], released under the MIT license
