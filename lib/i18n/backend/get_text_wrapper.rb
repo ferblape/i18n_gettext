@@ -30,7 +30,7 @@ module I18n
       
         def translate_with_gettext(locale, key, msgid_plural = nil, options = {})
           init_translations unless initialized?
-          set_locale(locale)
+          set_locale(Locale::Object.new(locale, nil, "UTF-8"))
           if (msgid_plural)
             nsgettext( key.to_s, msgid_plural.to_s, options[:count] )
           else
