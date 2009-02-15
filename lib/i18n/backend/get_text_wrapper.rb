@@ -28,9 +28,19 @@ module I18n
       
       protected
       
+        # The current locale text provided by the i18n rails backend.
+        # Used to ensure minimal calls to set_locale.
+        attr_accessor :current_wrapper_locale
+
         def translate_with_gettext(locale, key, msgid_plural = nil, options = {})
           init_translations unless initialized?
-          set_locale(Locale::Object.new(locale, nil, "UTF-8"))
+          # Gettext#set_locale is quite expensive, only set if it is needed
+          if self.current_wrapper_locale != locale
+            self.current_wrapper_locale = locale
+            # Always enforce UTF-8 (thanks to Vít Ondruch for this patch)
+            # Aparently can cause codeset errors if not forced
+            set_locale(Locale::Object.new(locale, nil, "UTF-8"))
+          end
           if (msgid_plural)
             nsgettext( key.to_s, msgid_plural.to_s, options[:count] )
           else
