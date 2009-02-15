@@ -39,7 +39,7 @@ module I18n
             self.current_wrapper_locale = locale
             # Always enforce UTF-8 (thanks to Vít Ondruch for this patch)
             # Aparently can cause codeset errors if not forced
-            set_locale(Locale::Object.new(locale, nil, "UTF-8"))
+            set_locale(Locale::Object.new(locale.to_s, nil, "UTF-8"))
           end
           if (msgid_plural)
             nsgettext( key.to_s, msgid_plural.to_s, options[:count] )
