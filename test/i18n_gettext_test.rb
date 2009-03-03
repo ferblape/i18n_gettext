@@ -5,7 +5,7 @@ require File.dirname(__FILE__) + '/../lib/i18n_gettext'
 # Foo class for testing
 class Foo; include I18nGetText end
 
-class I18nGettextTest <  ActiveSupport::TestCase #Test::Unit::TestCase
+class I18nGettextTest <  ActiveSupport::TestCase
 
   test 'sgettext should return the same as default' do
     assert_equal 'wadus', Foo.sgettext('wadus')

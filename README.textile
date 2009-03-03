@@ -25,7 +25,7 @@ methods for example are no longer supported, but can be replaced with a simple
 
 h2. Authors
 
-Project initiated at "Rails-Hackathon":http://rails-hackathon.org in Madrid by:
+Project initiated at "Rails-Hackathon":http://rails-hackathon.org in Madrid, February 2009, by:
 
 * "Sam Lown":http://www.samlown.com
 * "Fernando Blat":http://www.inwebwetrust.net
@@ -64,15 +64,39 @@ for more information.
 may be useful for this.
 
 
-TODO describe how to setup the .po, .mo, and message reaper methods using Gettext.
+TODO describe how to setup the .po, .mo, and message reaper methods using Gettext, but it should
+be pretty much the same as with the old Gettext extension.
+
+
+h2. Using Domains
+
+Gettext has a great feature which allows you to devide your applications into
+sections or "domains" so that you have different sets of translations for different
+parts of your application. This can be used for example to have a translations for 
+a generic or re-used administration area seperate from those of the frontend.
+
+In the old Gettext Rails extension, this was supported using the +init_gettext+ method,
+now however, the following can be set for the same effect:
+
+  I18n.backend.default_domain = 'administration'
+
+Include this in a section of your shared application controller for effect.
 
 
 h2. Possible Issues
 
 We're not sure how this will perform using Rails in Multi-threaded mode as it 
-depends greatly on the way Gettext works. Gettext has a tendancy to use lots of
-globals so we suspect it won't work very well.
+depends greatly on the way Gettext works. You can probably rest well assured 
+though that it will not work as expected. Gettext has a tendancy to use lots of
+globals, including the +Locale+ singleton class which has not been developed for 
+multi-threading to the best of our knowledge.
 
+h2. Guarantee
+
+We do not guarantee that this plugin will support all of your gettext requirements,
+nor that it will work correctly with your applications. Nonetheless, we hope it does, 
+and feel free to contact either Fernando or myself with your issues.
 
 
 Copyright (c) 2009 [Sam Lown, Fernando Blat], released under the MIT license
+
