@@ -17,7 +17,9 @@ module I18n
       def translate(locale, key, options = {})
         from_gettext = options.delete(:gettext)
         msgid_plural = options.delete(:msgid_plural)
-        default = options.delete(:default)
+        # only remove default if coming from gettext call
+        # otherwise we'd never get to translate with gettext
+        default = options.delete(:default) if from_gettext
         begin
           if key !~ /[^\d\w\.\_]/
             return super(locale, key, options)
