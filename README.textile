@@ -13,7 +13,12 @@ translation requests not recognised to Gettext which in turn will extract
 messages from the standard .mo translation dictionaries. This means that the
 example translation files provided by the "Rails i18n team":http://rails-i18n.org
 can be used for all the base Rails methods such as +distance_in_words+ and +Date+
-formatting.
+formatting. To this end, if the gettext methods are not used to translate, the
+Gettext dictionaries will not be used allowing the default I18n process to take 
+effect, for example:
+
+  _('Some text') = "Some text"
+  I18n.t 'Some text' = "translation missing: Some text"
 
 Plural strings are supported using the powerful Gettext syntax.
 
