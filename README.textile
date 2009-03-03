@@ -19,7 +19,7 @@ Plural strings are supported using the powerful Gettext syntax.
 
 This plugin should act as a drop-in replacement for the old gettext/rails
 extension, but some minor changes are required. The +after_init_gettext+ 
-methods for example are now longer supported, but can be replaced with a simple
+methods for example are no longer supported, but can be replaced with a simple
 +before_filter+ call.
 
 
@@ -56,7 +56,13 @@ in your config/environment.rb file after Initialization:
   I18n.backend.default_domain = 'somedomain'
 
 The default domain is used by Gettext to describe which .po files should be used for the
-translations. See the Gettext manuals for more information on this.
+translations. This used to be defined using the +init_gettext+ method. See the Gettext manuals
+for more information.
+ 
+4. Ensure that any old gettext calls have been removed or replaced, such as +init_gettext+,
++after_init_gettext+, or +set_locale+. The standard Rails +before_filter+ method and new +I18n.locale=+
+may be useful for this.
+
 
 TODO describe how to setup the .po, .mo, and message reaper methods using Gettext.
 
