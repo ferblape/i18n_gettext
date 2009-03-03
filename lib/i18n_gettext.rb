@@ -3,7 +3,7 @@ module I18nGetText
   module Methods
   
     def sgettext(msgid, div = '|')
-      text = I18n.translate msgid, :default => msgid
+      text = I18n.translate msgid, :default => msgid, :gettext => true
       if div
         if i = text.rindex(div)
           text = text[(i+1)..-1]
@@ -51,7 +51,7 @@ module I18nGetText
       end
     
       default_text = (n == 1) ? msgid : msgid_plural
-      I18n.translate msgid, :count => n, :default => default_text, :msgid_plural => msgid_plural
+      I18n.translate msgid, :count => n, :default => default_text, :msgid_plural => msgid_plural, :gettext => true
     end
   
     alias :n_ :nsgettext

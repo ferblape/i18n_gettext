@@ -15,23 +15,25 @@ module I18n
       end
 
       def translate(locale, key, options = {})
+        from_gettext = options.delete(:gettext)
         msgid_plural = options.delete(:msgid_plural)
         default = options.delete(:default)
         begin
           if key !~ /[^\d\w\.\_]/
             return super(locale, key, options)
           end
-        rescue I18n::MissingTranslationData
+        rescue I18n::MissingTranslationData => e
+          raise e unless from_gettext # Gettext will never fail, which is expected!
         end
         translate_with_gettext(locale, key, msgid_plural, options)
       end
       
       protected
-      
+
         # The current locale text provided by the i18n rails backend.
         # Used to ensure minimal calls to set_locale.
         attr_accessor :current_wrapper_locale
-
+      
         def translate_with_gettext(locale, key, msgid_plural = nil, options = {})
           init_translations unless initialized?
           # Gettext#set_locale is quite expensive, only set if it is needed
