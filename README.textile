@@ -1,5 +1,10 @@
 h1. I18nGettext
 
+*Update 2009-06-27*: Before strugling with the old Gettext ruby libraries, you might want to try
+out the "fast_gettext plugin for rails":http://github.com/grosser/gettext_i18n_rails by 
+Michael Grosser which already provides the functionality provided by this plugin with 
+its own, faster, and frankly better written and designed backend.
+
 h2. Introduction
 
 Gettext support for your Rails 2.2 or newer applications using the Rails I18n
